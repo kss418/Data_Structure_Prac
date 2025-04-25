@@ -3,54 +3,45 @@
 #include "include/Data_Structure.h"
 
 int main() {
-    Binary_Search_Tree bst;
-    bst.Create();
+    Priority_Queue pq;
+    const int CAP = 5;
+    pq.Create(CAP);
 
-    // 1) 빈 트리 검색
-    assert(bst.Search(10) == nullptr);
+    // 1) 빈 큐 동작 확인
+    assert(pq.Top() == 0);
+    assert(pq.Pop() == 0);
+    std::cout << "Empty PQ Top/Pop: OK\n";
 
-    // 2) 노드 삽입
-    int values[] = {50, 30, 70, 20, 40, 60, 80};
-    for (int v : values) {
-        bst.Insert(v);
+    // 2) 요소 삽입
+    int elems[] = {3, 5, 1, 4, 2};
+    for (int v : elems) {
+        pq.Push(v);
+        std::cout << "Pushed " << v << "\n";
     }
+    // 지금 최대값은 5
+    assert(pq.Top() == 5);
+    std::cout << "Top after pushes: " << pq.Top() << " (expected 5)\n";
 
-    // 삽입된 값들 검색 확인
-    for (int v : values) {
-        assert(bst.Search(v) != nullptr);
+    // 3) 최대 힙 팝 순서 검증
+    int expected[] = {5, 4, 3, 2, 1};
+    for (int e : expected) {
+        int t = pq.Pop();
+        std::cout << "Pop() returns " << t << "\n";
+        assert(t == e);
     }
-    // 없는 값 검색 시 nullptr
-    assert(bst.Search(25) == nullptr);
+    // 이제 빈 상태
+    assert(pq.Top() == 0);
+    assert(pq.Pop() == 0);
 
-    // 3) 리프 노드 삭제 (20)
-    bst.Delete(20);
-    assert(bst.Search(20) == nullptr);
-    // 나머지 값들은 여전히 존재
-    for (int v : {30, 40, 50, 60, 70, 80}) {
-        assert(bst.Search(v) != nullptr);
-    }
+    // 4) 재사용 테스트: 다시 삽입 후 확인
+    pq.Push(10);
+    pq.Push(20);
+    assert(pq.Top() == 20);
+    std::cout << "Re-push Top: " << pq.Top() << " (expected 20)\n";
+    assert(pq.Pop() == 20);
+    assert(pq.Pop() == 10);
+    assert(pq.Pop() == 0);
 
-    // 4) 자식 하나인 노드 삭제 (30)
-    bst.Delete(30);
-    assert(bst.Search(30) == nullptr);
-    for (int v : {40, 50, 60, 70, 80}) {
-        assert(bst.Search(v) != nullptr);
-    }
-
-    // 5) 자식 둘인 노드 삭제 (50, 루트)
-    bst.Delete(50);
-    assert(bst.Search(50) == nullptr);
-    for (int v : {40, 60, 70, 80}) {
-        assert(bst.Search(v) != nullptr);
-    }
-
-    // 6) 존재하지 않는 값 삭제
-    bst.Delete(100);
-    // 트리 구조에 영향 없어야 함
-    for (int v : {40, 60, 70, 80}) {
-        assert(bst.Search(v) != nullptr);
-    }
-
-    std::cout << "All BST tests passed!" << std::endl;
+    std::cout << "All Priority_Queue tests passed!\n";
     return 0;
 }

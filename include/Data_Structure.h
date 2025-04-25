@@ -5,3 +5,4 @@
 #include "Stack.h"
 #include "Circular_Queue.h"
 #include "Binary_Search_Tree.h"
+#include "Priority_Queue.h"
