@@ -2,16 +2,17 @@
 
 class Sorted_Linked_List{
 public:
-    void Create();
-    int Search(int value);
-    int Insert(int value);
-    int Delete(int value);
-
-private:
     class node{
+    public:
         int value;
         node *prev, *next;
     };
+    
+    void Create();
+    node* Search(int value);
+    void Insert(int value);
+    void Delete(int value);
 
-    node* head;
+private:
+    node* head, *tail;
 };
