@@ -1,60 +1,56 @@
-#include "include/Data_Structure.h"
+#include <iostream>
 #include <cassert>
+#include "include/Data_Structure.h"
 
-int main(){
-    Circular_Queue q;
-    const int CAP = 5;
-    q.Create(CAP);
+int main() {
+    Binary_Search_Tree bst;
+    bst.Create();
 
-    // 1) 빈 큐 확인
-    assert(q.Empty());
-    assert(!q.Full());
-    std::cout << "Empty on init: OK\n";
+    // 1) 빈 트리 검색
+    assert(bst.Search(10) == nullptr);
 
-    // 2) Push 5개 → Full
-    for (int i = 1; i <= CAP; ++i) {
-        q.Push(i * 10);
-        std::cout << "Pushed " << (i * 10) << "\n";
+    // 2) 노드 삽입
+    int values[] = {50, 30, 70, 20, 40, 60, 80};
+    for (int v : values) {
+        bst.Insert(v);
     }
-    assert(!q.Empty());
-    assert(q.Full());
-    std::cout << "Full after " << CAP << " pushes: OK\n";
 
-    // 3) Top(peek) 확인 (가장 먼저 들어간 값)
-    int peek = q.Top();
-    std::cout << "Top() returns: " << peek << " (expected 10)\n";
-    assert(peek == 10);
-    // Top()은 pop 하지 않으므로, 다음 Pop()도 10이어야 함
-    int first = q.Pop();
-    std::cout << "Pop() returns: " << first << " (expected 10)\n";
-    assert(first == 10);
-
-    // 4) Pop 나머지
-    for (int expect = 20; expect <= 50; expect += 10) {
-        int v = q.Pop();
-        std::cout << "Pop() returns: " << v << " (expected " << expect << ")\n";
-        assert(v == expect);
+    // 삽입된 값들 검색 확인
+    for (int v : values) {
+        assert(bst.Search(v) != nullptr);
     }
-    assert(q.Empty());
-    std::cout << "Empty after pops: OK\n";
+    // 없는 값 검색 시 nullptr
+    assert(bst.Search(25) == nullptr);
 
-    // 5) 원형 래핑 테스트
-    for (int i = 1; i <= 3; ++i) q.Push(i);   // queue: [1,2,3]
-    for (int i = 0; i < 2; ++i) {             // pop 두 개 → [3]
-        std::cout << "Pop() wraps: " << q.Pop() << "\n";
+    // 3) 리프 노드 삭제 (20)
+    bst.Delete(20);
+    assert(bst.Search(20) == nullptr);
+    // 나머지 값들은 여전히 존재
+    for (int v : {30, 40, 50, 60, 70, 80}) {
+        assert(bst.Search(v) != nullptr);
     }
-    for (int i = 4; i <= 7; ++i) {            // push 4,5,6,7 → should wrap head
-        q.Push(i);
-        std::cout << "Pushed (wrapping) " << i << "\n";
-    }
-    // 남은 요소들을 차례로 꺼내면 3,4,5,6,7
-    std::cout << "Final queue contents: ";
-    while (!q.Empty()) {
-        std::cout << q.Pop() << ' ';
-    }
-    std::cout << "\n(Expected sequence: 3 4 5 6 7)\n";
 
-    std::cout << "All tests passed!\n";
+    // 4) 자식 하나인 노드 삭제 (30)
+    bst.Delete(30);
+    assert(bst.Search(30) == nullptr);
+    for (int v : {40, 50, 60, 70, 80}) {
+        assert(bst.Search(v) != nullptr);
+    }
 
+    // 5) 자식 둘인 노드 삭제 (50, 루트)
+    bst.Delete(50);
+    assert(bst.Search(50) == nullptr);
+    for (int v : {40, 60, 70, 80}) {
+        assert(bst.Search(v) != nullptr);
+    }
+
+    // 6) 존재하지 않는 값 삭제
+    bst.Delete(100);
+    // 트리 구조에 영향 없어야 함
+    for (int v : {40, 60, 70, 80}) {
+        assert(bst.Search(v) != nullptr);
+    }
+
+    std::cout << "All BST tests passed!" << std::endl;
     return 0;
 }

@@ -4,3 +4,4 @@
 #include "Sorted_Array.h"
 #include "Stack.h"
 #include "Circular_Queue.h"
+#include "Binary_Search_Tree.h"
