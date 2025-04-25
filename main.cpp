@@ -1,20 +1,19 @@
 #include "include/Data_Structure.h"
 
 int main(){
-    Sorted_Array array;
-    array.Create(20);
+    Stack stack;
+    stack.Create(3);
 
-    array.Insert(10);
-    array.Insert(5);
-    array.Insert(8);
+    stack.Push(1);
+    stack.Push(2);
+    stack.Push(3);
+    stack.Push(4);
 
-    std::cout << *array.Access(2) << std::endl;
-    std::cout << *array.Search(5) << std::endl;
-    std::cout << array.Search(9) << std::endl;
+    std::cout << stack.Pop() << std::endl;
+    std::cout << stack.Pop() << std::endl;
+    std::cout << stack.Pop() << std::endl;
 
-    array.Delete(8);
-    std::cout << array.Search(8) << std::endl;
-    std::cout << *array.Access(1) << std::endl;
+    std::cout << stack.Empty();
 
     return 0;
 }
