@@ -1,18 +1,20 @@
 #include "include/Data_Structure.h"
 
 int main(){
-    Sorted_Linked_List list;
-    list.Create();
+    Sorted_Array array;
+    array.Create(20);
 
-    list.Insert(3);
-    list.Insert(2);
-    list.Insert(1);
+    array.Insert(10);
+    array.Insert(5);
+    array.Insert(8);
 
-    std::cout << list.Search(4) << std::endl;
-    std::cout << list.Search(3) << std::endl;
+    std::cout << *array.Access(2) << std::endl;
+    std::cout << *array.Search(5) << std::endl;
+    std::cout << array.Search(9) << std::endl;
 
-    list.Delete(3);
-    std::cout << list.Search(3) << std::endl;
+    array.Delete(8);
+    std::cout << array.Search(8) << std::endl;
+    std::cout << *array.Access(1) << std::endl;
 
     return 0;
 }
