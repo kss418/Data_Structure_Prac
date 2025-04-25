@@ -1,13 +1,17 @@
 #pragma once
 
-struct Sorted_Linked_List{
+class Sorted_Linked_List{
+public:
     void Create();
-    void Insert(int value);
-    int Delete(int value);
     int Search(int value);
+    int Insert(int value);
+    int Delete(int value);
 
-    struct node{
+private:
+    class node{
         int value;
-        node* next;
+        node *prev, *next;
     };
+
+    node* head;
 };
